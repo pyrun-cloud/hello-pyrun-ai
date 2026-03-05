@@ -18,7 +18,7 @@ To launch the integrated system, simply open your terminal and type:
 copilot
 ```
 
-This command initializes the GitHub Copilot CLI with full awareness of your AWS account. From this single interface, you can immediately start interacting with your cloud resources.
+This command initializes the GitHub Copilot CLI with full awareness of your AWS account. From this single interface, you can immediately start interacting with your cloud resources (Lambda, EC2, S3, ...).
 
 
 ## 🛠️ Capabilities
