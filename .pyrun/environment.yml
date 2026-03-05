@@ -17,6 +17,13 @@ dependencies:
   - ipykernel
   - ipywidgets
   - git
+  - curl
+
+  # Dask packages
+  - dask
+  - dask-cloudprovider
 
   - pip:
     - $LITHOPS
+    - uv
+    - dask-cloudprovider[ibm] @ git+https://github.com/dask/dask-cloudprovider.git
