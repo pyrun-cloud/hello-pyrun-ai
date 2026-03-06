@@ -11,6 +11,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Create the specific user and its home directory
 RUN useradd -m -s /bin/bash pyrunuser
 
+# Ensure Python output is not buffered
+ENV PYTHONUNBUFFERED=TRUE
+
 # Set up the function directory (standard for cloud function environments)
 ARG FUNCTION_DIR="/function"
 RUN mkdir -p ${FUNCTION_DIR} && chown pyrunuser:pyrunuser ${FUNCTION_DIR}
@@ -28,6 +31,10 @@ RUN pip install --no-cache-dir \
     uv \
     "dask-cloudprovider[ibm] @ git+https://github.com/dask/dask-cloudprovider.git"
 
+# Cleaning apt packages
+RUN apt-get purge -y --auto-remove gcc \
+    && rm -rf /var/lib/apt/lists/*
+
 # --- COPILOT INSTALLATION SECTION ---
 # Switch to the specific user to install Copilot in their local directory
 USER pyrunuser
@@ -41,5 +48,6 @@ ENV PATH="/home/pyrunuser/.local/bin:${PATH}"
 # Ensure interactive shells (like 'docker exec -it') also load the new PATH
 RUN echo 'export PATH="/home/pyrunuser/.local/bin:$PATH"' >> ~/.bashrc
 
-# Ensure Python output is not buffered
-ENV PYTHONUNBUFFERED=TRUE
+# -- OPENCODE INSTALLATION SECTION --
+# Install OpenCode using curl
+RUN curl -fsSL https://opencode.ai/install | bash
