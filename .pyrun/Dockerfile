@@ -9,6 +9,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Node.js (required for skills and agent tools)
+RUN curl -fsSLO "https://nodejs.org/dist/v20.11.1/node-v20.11.1-linux-x64.tar.gz" \
+    && tar -xzf "node-v20.11.1-linux-x64.tar.gz" -C /usr/local --strip-components=1 --no-same-owner \
+    && rm "node-v20.11.1-linux-x64.tar.gz"
+
 # Create the specific user and its home directory
 RUN useradd -m -s /bin/bash pyrunuser
 
@@ -36,10 +41,14 @@ RUN pip install --no-cache-dir \
 RUN apt-get purge -y --auto-remove gcc \
     && rm -rf /var/lib/apt/lists/*
 
-# --- COPILOT INSTALLATION SECTION ---
-# Switch to the specific user to install Copilot in their local directory
+# Switch to the specific user to install tools in their local directory
 USER pyrunuser
 
+# Install skills using npx (cleaning cache to save space)
+RUN npx -y skills add vercel-labs/agent-skills \
+    && npm cache clean --force
+
+# --- COPILOT INSTALLATION SECTION ---
 # Download and execute the Copilot installer
 RUN curl -fsSL https://gh.io/copilot-install | bash
 
