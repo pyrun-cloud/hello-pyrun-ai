@@ -39,6 +39,11 @@ To start interacting with it, simply run:
 opencode
 ```
 
+## 🧰 SKILLS.sh Integration
+PyRun now includes out-of-the-box support for **[SKILLS.sh](https://skills.sh/)** (powered by Vercel Agent Skills). This integration expands your AI agents' capabilities, allowing them to interact with an even wider array of tools and perform complex tasks directly from your environment.
+
+The skills ecosystem is pre-configured, meaning your agents can start utilizing these extended functionalities immediately to streamline your workflow without any manual setup.
+
 ## 🛠️ Capabilities
 
 Since PyRun comes with a built-in MCP server already connected to your AWS environment, you can use natural language to:
