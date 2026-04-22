@@ -5,8 +5,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     git \
     curl \
+    unzip \
     openssh-client \
     ca-certificates \
+    less \
+    groff-base \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Node.js (required for skills and agent tools)
@@ -40,6 +43,12 @@ RUN pip install --no-cache-dir \
 # Cleaning apt packages
 RUN apt-get purge -y --auto-remove gcc \
     && rm -rf /var/lib/apt/lists/*
+
+# -- AWS CLI INSTALLATION SECTION --
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+    && unzip awscliv2.zip \
+    && ./aws/install -i /usr/local/aws-cli -b /usr/local/bin \
+    && rm -rf awscliv2.zip ./aws
 
 # Switch to the specific user to install tools in their local directory
 USER pyrunuser
